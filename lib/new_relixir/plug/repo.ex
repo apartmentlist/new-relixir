@@ -26,9 +26,15 @@ defmodule NewRelixir.Plug.Repo do
 
       import NewRelixir.Plug.Instrumentation
 
+      def transaction(opts \\ [], fun)
+
       @spec transaction(Keyword.t, fun) :: {:ok, any} | {:error, any}
-      def transaction(opts \\ [], fun) when is_list(opts) do
+      def transaction(opts, fun) when is_list(opts) do
         repo.transaction(opts, fun)
+      end
+
+      def transaction(fun_or_multi, opts) do
+        repo.transaction(fun_or_multi, opts)
       end
 
       @spec rollback(any) :: no_return
